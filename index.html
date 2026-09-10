@@ -1,0 +1,393 @@
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
+
+:root{
+  --paper:#E4EAE8;
+  --card:#FFFFFF;
+  --ink:#16232A;
+  --muted:#5E6F74;
+  --line:#C9D4D1;
+  --peak:#E4610F;
+  --done:#2E6E5B;
+  --warn:#8A5A00;
+}
+*{box-sizing:border-box}
+#app{
+  font-family:'Inter',system-ui,sans-serif;
+  color:var(--ink);
+  background:var(--paper);
+  max-width:560px;
+  margin:0 auto;
+  padding:0 14px 40px;
+  font-size:15px;
+  line-height:1.5;
+  -webkit-text-size-adjust:100%;
+}
+h1,h2,h3{font-family:'Barlow Condensed','Inter',sans-serif;font-weight:600;margin:0;line-height:1.05}
+.num{font-family:'Barlow Condensed','Inter',sans-serif;font-weight:600;font-variant-numeric:tabular-nums}
+
+/* hero */
+.hero{position:relative;margin:14px 0 0;border-radius:3px;overflow:hidden;background:#16232A}
+.hero svg{display:block;width:100%;height:118px}
+.hero-txt{position:absolute;inset:0;padding:14px 16px;display:flex;flex-direction:column;justify-content:space-between;color:#EAF0EE}
+.hero-txt .big{font-family:'Barlow Condensed',sans-serif;font-size:44px;font-weight:700;letter-spacing:-.01em;line-height:.9}
+.hero-txt .sub{font-size:13px;color:#9FB3B0}
+.hero-txt .right{text-align:right;font-size:13px;color:#9FB3B0}
+.row-between{display:flex;justify-content:space-between;align-items:flex-end;gap:10px}
+
+/* tabs */
+nav{display:flex;gap:2px;margin:12px 0 16px;background:#D6DEDC;padding:2px;border-radius:3px}
+nav button{flex:1;border:0;background:transparent;padding:9px 4px;font:inherit;font-size:14px;color:var(--muted);border-radius:2px;cursor:pointer}
+nav button[aria-selected="true"]{background:var(--card);color:var(--ink);font-weight:600;box-shadow:0 1px 2px rgba(22,35,42,.12)}
+nav button:focus-visible{outline:2px solid var(--peak);outline-offset:-2px}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:3px;padding:14px;margin-bottom:10px}
+.card h3{font-size:20px;margin-bottom:2px}
+.cue{color:var(--muted);font-size:13.5px;margin:4px 0 10px}
+.how{font-size:14px;margin:6px 0 8px}
+.how b,details b{font-weight:600}
+a.vid{color:var(--peak);font-size:12.5px;text-decoration:none;border:1px solid var(--peak);border-radius:2px;padding:1px 6px;white-space:nowrap;margin-left:4px}
+a.vid:hover,a.vid:focus-visible{background:var(--peak);color:#fff}
+details li{margin-bottom:9px;line-height:1.45}
+.tag{display:inline-block;font-size:11.5px;letter-spacing:.02em;color:var(--muted);border:1px solid var(--line);padding:1px 6px;border-radius:2px;margin-bottom:6px}
+.target{color:var(--peak);font-weight:600;font-size:14px;margin:2px 0 10px}
+.target.deload{color:var(--warn)}
+
+/* set inputs */
+.sets{display:flex;flex-direction:column;gap:6px}
+.set{display:flex;align-items:center;gap:8px}
+.set label{width:52px;font-size:12.5px;color:var(--muted)}
+.set input{width:100%;min-width:0;padding:9px 8px;border:1px solid var(--line);border-radius:2px;font:inherit;font-size:16px;background:#FBFCFC;color:var(--ink)}
+.set input:focus{outline:2px solid var(--peak);outline-offset:-1px;background:#fff}
+.unit{font-size:12.5px;color:var(--muted);width:22px;flex:none}
+
+details{border-top:1px solid var(--line);padding-top:10px;margin-top:2px}
+summary{cursor:pointer;font-size:14px;color:var(--muted);font-weight:500}
+details ul{margin:8px 0 0;padding-left:18px;font-size:14px;color:var(--muted)}
+details li{margin-bottom:3px}
+
+.finisher{background:#16232A;color:#EAF0EE;border-color:#16232A}
+.finisher h3{color:#fff}
+.finisher .cue{color:#9FB3B0}
+.finisher .fmt{color:#FFB37A;font-weight:600;font-size:15px}
+.linkbtn{background:none;border:0;color:#9FB3B0;font:inherit;font-size:13px;text-decoration:underline;cursor:pointer;padding:6px 0 0}
+
+button.primary{width:100%;padding:14px;border:0;border-radius:3px;background:var(--peak);color:#fff;font:inherit;font-size:16px;font-weight:600;cursor:pointer;margin-top:4px}
+button.primary:disabled{background:#B9C3C1;cursor:default}
+button.ghost{width:100%;padding:11px;border:1px solid var(--line);border-radius:3px;background:transparent;font:inherit;font-size:14px;color:var(--muted);cursor:pointer;margin-top:8px}
+
+.datebar{display:flex;align-items:center;gap:8px;margin-bottom:10px;font-size:13.5px;color:var(--muted)}
+.datebar input{padding:7px;border:1px solid var(--line);border-radius:2px;font:inherit;font-size:14px;background:var(--card)}
+
+.hist{font-size:13.5px;color:var(--muted)}
+.hist div{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--line)}
+.hist div:last-child{border-bottom:0}
+
+.meal{border-left:3px solid var(--peak);padding-left:12px;margin-bottom:16px}
+.meal h3{font-size:19px}
+.meal p{margin:4px 0 0;font-size:14px}
+.meal .when{font-size:12.5px;color:var(--muted);margin-bottom:2px}
+.rule{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid var(--line);font-size:14px}
+.rule:last-child{border-bottom:0}
+.rule b{font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:600;white-space:nowrap}
+
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:18px;background:var(--done);color:#fff;padding:11px 18px;border-radius:3px;font-size:14px;z-index:9;box-shadow:0 4px 14px rgba(0,0,0,.2)}
+.err{color:#9B2C1C;font-size:13.5px;margin-top:8px}
+@media (prefers-reduced-motion:no-preference){.toast{animation:pop .18s ease-out}}
+@keyframes pop{from{opacity:0;transform:translate(-50%,6px)}}
+</style>
+
+<div id="app"><div class="card">Načítám…</div></div>
+
+<script>
+(function(){
+const KEY='gym-data-v1';
+let S={sessions:[],body:[],recentFin:[]};
+let tab='trenink', pending=null, err='';
+
+/* ---------- data ---------- */
+const WARMUP=[
+{n:'Veslo nebo pás 3 minuty lehce',d:'Cíl je jediný — zvednout teplotu, dokud se nezapotíš.'},
+{n:'Kroužení pánví 10 na každou stranu',d:'Ve stoje, ruce v bok, kroužíš pánví jako s obručí.'},
+{n:'Kočka–velbloud 10 opakování',d:'Na čtyřech střídavě vyhrbíš záda ke stropu a prohneš do sedla.'},
+{n:'World\u2019s greatest stretch 5 na každou stranu',d:'Hluboký výpad, přední chodidlo a obě dlaně na zemi vedle sebe. Pak zvedneš ruku na straně přední nohy do stropu a otočíš se za ní.'},
+{n:'Mrtvý brouk 10 opakování',d:'Leh na zádech, ruce vzhůru, kolena nad boky. Natahuješ protilehlou ruku a nohu k zemi a bedra držíš přitisknutá.'},
+{n:'Rozpažování s gumou 15 opakování',d:'Guma napnutá před sebou v obou rukou, rozpažíš do stran, dokud se nedotkne hrudníku.'},
+{n:'10 dřepů bez zátěže',d:'Pomalu, do plné hloubky, na kterou se dostaneš.'}];
+
+const EX={
+ squat:{n:'Přední dřep s osou',early:'Goblet dřep s kettlem',
+  how:'Osa leží vepředu na ramenou v důlku u klíčních kostí, lokty míří vpřed a nahoru. Dřepneš rovně dolů, trup zůstává vzpřímený.',
+  howEarly:'Držíš kettle oběma rukama u hrudníku jako pohár a dřepneš mezi kolena.',cue:'Lokty drž vysoko. Jakmile klesnou, osa tě přepadne dopředu.',inc:5},
+ bench:{n:'Bench press s osou',
+  how:'Leh na lavici, osa ze stojánků nad hrudník. Dolů na spodní hrudník s kontaktem, pak zpátky nad ramena.',
+  cue:'Lopatky stažené k sobě a dolů, chodidla pevně na zemi, osa na spodní hrudník. Palce vždycky obtočené kolem osy.',inc:2.5},
+ lunge:{n:'Zpětný výpad s kettly',
+  how:'Kettly visí podél těla. Uděláš krok dozadu, zadní koleno klesne skoro k zemi, pak se přední nohou vytlačíš zpátky do stoje.',
+  cue:'Váha celá na přední noze, zadní se neodráží od země.',inc:4},
+ pushup:{n:'Kliky na stojánkách',
+  how:'Ruce na úchytech místo na podlaze, díky tomu klesneš hrudníkem hlouběji, než by šlo o zem.',
+  cue:'Tělo jako prkno, hýždě sevřené, nepropadat se v bedrech.',bw:true},
+ dead:{n:'Mrtvý tah s osou',
+  how:'Osa nad středem chodidel, boky výš než kolena a níž než ramena. Zvedneš ji podél holení do plného stoje a stejnou cestou zpátky.',
+  cue:'Nejdřív vytáhni prověšení z osy, teprve pak zabírej. Nikdy netrhat zaseknutou činku ze země.',inc:5},
+ row:{n:'Veslo s jednoručkou o lavici',late:'Předkloněné veslo s osou',
+  how:'Koleno a dlaň jedné strany na lavici, druhá noha na zemi, záda vodorovně. Volnou rukou taháš jednoručku k boku.',
+  howLate:'Ve stoje se předkloníš asi do 45 stupňů a taháš osu k pupku.',
+  cue:'Ruka a koleno na lavici, záda rovná jako stůl, tahej loktem k boku. Nerotuj trupem, ať to láká jakkoli.',inc:2.5},
+ aus:{n:'Australský přítah pod hrazdou, nohy na bedně',
+  how:'Ležíš pod nízkou tyčí, chytíš ji nadhmatem, paty na bedně, tělo jako prkno. Taháš se hrudníkem k tyči.',
+  cue:'Hrudníkem k tyči, ne bradou.',bw:true},
+ face:{n:'Face pull na kladce',
+  how:'Kladka nastavená ve výšce obličeje, lano do obou rukou. Taháš k nosu a lokty jdou přitom široko do stran.',
+  cue:'Tahej k obličeji a na konci rozevři. Ramena drž dole.',inc:2.5},
+ step:{n:'Výstupy na bednu se zátěží',
+  how:'Celé chodidlo na bednu, vystoupíš do plného stoje, pak pomalu zpátky dolů. Celou sérii jedeš na jednu nohu, pak střídáš.',
+  cue:'Dolů brzdi pomalu — sestup je to, co tě v horách složí. Spodní nohou se nepomáhat.',inc:4},
+ bulg:{n:'Bulharský dřep',
+  how:'Zadní nárt položený na lavici, přední noha zhruba metr před ní. Klesáš rovně dolů, ne dopředu.',
+  cue:'Váha na patě přední nohy, trup mírně vpřed. Zadní noha jen podpírá, nedělej z toho výpad.',inc:4},
+ ohp:{n:'Tlak nad hlavu s osou ve stoje',
+  how:'Osa leží na předních ramenou. Vytlačíš ji nad hlavu, hlavu přitom lehce uhneš vzad a nahoře se zase vrátíš pod osu.',
+  cue:'Sevři hýždě a stáhni žebra dolů, jinak se ohneš v kříži.',inc:4},
+ carry:{n:'Nošení — suitcase carry nebo bulharský pytel',
+  how:'Jedna těžká věc v jedné ruce jako kufr, nebo pytel na rameni. Jdeš 40 metrů rovně a zpátky s druhou rukou.',
+  cue:'Ramena v rovině, nenaklánět se na odlehčenou stranu. 40 metrů na každou ruku.',inc:4},
+ leg:{n:'Zvedání nohou na žebřinách',
+  how:'Visíš na žebřinách zády opřený o příčle. Zvedáš natažené nohy dopředu, ideálně do vodorovné polohy.',
+  cue:'Bedra přitisknutá, žádné houpání.',bw:true}
+};
+
+const DAYS={
+ A:{name:'Dřep a tlak',main:['squat','bench'],sup:['lunge','pushup'],neg:false},
+ B:{name:'Hinge a tah',main:['dead','row'],sup:['aus','face'],neg:true},
+ C:{name:'Nohy, ramena, nošení',main:['step','ohp'],sup:['carry','leg'],neg:true}
+};
+
+const FIN=[
+ {id:'swing',n:'Švihy s kettlem',cue:'Pohyb z boků, ne z ramen. Kettle jen letí.',v:['EMOM 8 minut: 12 švihů 20 kg','30 s práce / 30 s pauza × 8, kettle 24 kg','5 kol: 20 švihů 16 kg + 20 s odpočinek']},
+ {id:'rope',n:'Vlnění lanem',cue:'Kolena měkká, dýchej. Nezvedej ramena k uším.',v:['30 s / 30 s × 8, střídej vlny a kruhy','AMRAP 6 minut: 20 s vlny + 10 dřepů']},
+ {id:'slam',n:'Slamy s medicimbalem',cue:'Celý pohyb končí u země, nebrzdi to.',v:['EMOM 8: 10 slamů s osmičkou','4 kola na čas: 15 slamů + 10 kliků']},
+ {id:'box',n:'Výskoky na bednu',cue:'Dolů vždycky krokem, ne seskokem — kolena ti poděkují.',v:['EMOM 8: 8 výskoků','5 kol: 10 výskoků + 20 s pauza']},
+ {id:'farmer',n:'Farmářská chůze s pytlem',cue:'Hrudník nahoru, krátké rychlé kroky.',v:['6 kol: 40 m tam a zpět, pauza 45 s','AMRAP 6 minut: 40 m nošení + 5 dřepů s pytlem']},
+ {id:'row',n:'Veslovací trenažér',cue:'Nohy, pak trup, pak ruce. Zpátky přesně naopak.',v:['8 × 250 m, mezi tím 45 s pauza','30 s naplno / 60 s lehce × 6']},
+ {id:'incline',n:'Pás se sklonem',cue:'Nedrž se zábradlí, jinak to nemá cenu.',v:['8 minut, sklon 12 %, svižná chůze','4 × 90 s do kopce, mezi tím 60 s rovina']},
+ {id:'clean',n:'Kettle clean & press',cue:'Kettle se nepřetáčí přes zápěstí, obtoč ho kolem ruky.',v:['EMOM 8: 5 na každou ruku, 16 kg','5 kol: 6 na každou ruku + 10 švihů']},
+ {id:'ball',n:'Koule s úchyty',cue:'Zvedej ze země s rovnými zády, jako mrtvý tah.',v:['4 kola na čas: 10 zvedů + 40 m nošení','EMOM 8: 8 zvedů nad hlavu']},
+ {id:'bear',n:'Medvědí lezení kolem bedny',cue:'Boky nízko, záda placatá. Kolena se nedotknou země.',v:['6 kol: 30 s lezení + 30 s pauza','4 kola: 20 m tam a zpět + 10 kliků']}
+];
+
+/* ---------- odvozeniny ---------- */
+const count=()=>S.sessions.length;
+const nextNo=()=>count()+1;
+const letter=n=>['A','B','C'][(n-1)%3];
+const isDeload=n=>n>24&&((n-1)%24)<3;
+const phase=n=>n<=12?'rozjezd':'progrese';
+const setsFor=n=>isDeload(n)?2:Math.min(3+Math.floor((n-1)/12),5);
+const exFor=(id,n)=>{const e=EX[id];let name=e.n,how=e.how;
+  if(e.early&&n<=12){name=e.early;how=e.howEarly||how}
+  if(e.late&&n>12){name=e.late;how=e.howLate||how}
+  if(id==='step'&&Math.floor((n-1)/24)%2===1)return{...EX.bulg,name:EX.bulg.n,how:EX.bulg.how,id:'bulg'};
+  return{...e,name,how,id}};
+
+function vid(name){
+  const q=encodeURIComponent(name.replace(/ —.*/,'').replace(/,.*/,'')+' technika');
+  return '<a class="vid" target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query='+q+'">video</a>';
+}
+
+function lastOf(id){for(let i=S.sessions.length-1;i>=0;i--){const s=S.sessions[i];if(s.ex&&s.ex[id]&&s.ex[id].length)return s.ex[id]}return null}
+
+function suggest(id,n){
+  const e=exFor(id,n), prev=lastOf(e.id), sets=setsFor(n);
+  if(e.bw){
+    if(!prev)return{txt:sets+' série do 3 opakování před selháním',w:''};
+    const best=Math.max(...prev.map(x=>x.r||0));
+    return{txt:sets+' × '+(best+1)+' opakování',w:''};
+  }
+  if(!prev)return{txt:sets+' × 8, zvol váhu, se kterou bys dal 11 — 3 opakování necháváš v rezervě',w:''};
+  const w=prev[0].w||0, low=Math.min(...prev.map(x=>x.r||0));
+  if(isDeload(n))return{txt:'2 × 8 s váhou '+Math.round(w*0.6*2)/2+' kg (lehký týden)',w:Math.round(w*0.6*2)/2,dl:true};
+  if(n<=12)return{txt:sets+' × '+Math.min(low+1,12)+' s '+w+' kg, pořád 3 opakování v rezervě',w:w};
+  if(low>=12){const nw=w+(e.inc||2.5);return{txt:sets+' × 8 s '+nw+' kg — přidáváš!',w:nw}}
+  return{txt:sets+' × '+(low+1)+' s '+w+' kg',w:w};
+}
+
+function pickFin(){
+  const pool=FIN.filter(f=>!S.recentFin.includes(f.id));
+  const src=pool.length?pool:FIN;
+  const f=src[Math.floor(Math.random()*src.length)];
+  return{id:f.id,n:f.n,cue:f.cue,fmt:f.v[Math.floor(Math.random()*f.v.length)]};
+}
+
+/* ---------- storage ---------- */
+const store={
+  async get(k){
+    if(window.storage&&window.storage.get){try{return await window.storage.get(k)}catch(e){}}
+    const v=localStorage.getItem(k); return v===null?null:{value:v};
+  },
+  async set(k,v){
+    if(window.storage&&window.storage.set){try{return await window.storage.set(k,v)}catch(e){}}
+    localStorage.setItem(k,v); return true;
+  }
+};
+async function load(){
+  try{const r=await store.get(KEY);if(r&&r.value){const d=JSON.parse(r.value);S={sessions:d.sessions||[],body:d.body||[],recentFin:d.recentFin||[]}}}
+  catch(e){/* první spuštění */}
+}
+async function save(){
+  try{await store.set(KEY,JSON.stringify(S));err='';return true}
+  catch(e){err='Uložení selhalo. Zkus to znovu, ať o zápis nepřijdeš.';render();return false}
+}
+function exportData(){
+  const blob=new Blob([JSON.stringify(S)],{type:'application/json'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='trenink-zaloha-'+new Date().toISOString().slice(0,10)+'.json';
+  a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+}
+function importData(file){
+  const r=new FileReader();
+  r.onload=async()=>{
+    try{const d=JSON.parse(r.result);
+      if(!Array.isArray(d.sessions))throw 0;
+      S={sessions:d.sessions,body:d.body||[],recentFin:d.recentFin||[]};
+      if(await save()){toast('Záloha načtena');pending=null;render()}}
+    catch(e){err='Tenhle soubor nevypadá jako záloha z téhle appky.';render()}
+  };
+  r.readAsText(file);
+}
+function toast(t){const d=document.createElement('div');d.className='toast';d.textContent=t;document.body.appendChild(d);setTimeout(()=>d.remove(),2200)}
+
+/* ---------- render ---------- */
+function hero(){
+  const n=nextNo(), inBlock=(n-1)%24, pct=inBlock/24;
+  const lines=[0,1,2,3,4].map(i=>{
+    const y=104-i*17, o=.16+i*.06;
+    let d='M0 '+y;
+    for(let x=0;x<=560;x+=28){d+=' Q'+(x+14)+' '+(y-6-i*2)+' '+(x+28)+' '+y}
+    return '<path d="'+d+'" fill="none" stroke="#EAF0EE" stroke-opacity="'+o+'" stroke-width="1"/>'}).join('');
+  const fill='<rect x="0" y="0" width="'+(pct*100)+'%" height="118" fill="#E4610F" opacity="0.16"/>';
+  const zbyva=isDeload(n)?'lehký týden':(24-inBlock)+' do lehkého týdne';
+  return '<div class="hero"><svg viewBox="0 0 560 118" preserveAspectRatio="none">'+fill+lines+'</svg>'+
+   '<div class="hero-txt"><div class="row-between"><div><div class="sub">trénink</div><div class="big">'+n+'</div></div>'+
+   '<div class="right">'+letter(n)+' — '+DAYS[letter(n)].name+'<br>'+phase(n)+'<br>'+zbyva+'</div></div></div></div>';
+}
+
+function exCard(id,n,i){
+  const e=exFor(id,n), s=suggest(id,n), sets=setsFor(n), tag=i<2?'hlavní cvik':'superset';
+  let rows='';
+  for(let k=0;k<sets;k++){
+    rows+='<div class="set"><label>'+(k+1)+'. série</label>'+
+      (e.bw?'':'<input inputmode="decimal" data-ex="'+e.id+'" data-set="'+k+'" data-f="w" value="'+(s.w||'')+'" aria-label="váha"><span class="unit">kg</span>')+
+      '<input inputmode="numeric" data-ex="'+e.id+'" data-set="'+k+'" data-f="r" aria-label="opakování"><span class="unit">op</span></div>';
+  }
+  return '<div class="card"><span class="tag">'+tag+'</span><h3>'+e.name+'</h3>'+
+    '<p class="how">'+(e.how||'')+' '+vid(e.name)+'</p>'+
+    '<p class="cue"><b>Na čem to stojí:</b> '+e.cue+'</p><p class="target'+(s.dl?' deload':'')+'">'+s.txt+'</p><div class="sets">'+rows+'</div></div>';
+}
+
+function viewTrenink(){
+  const n=nextNo(), d=DAYS[letter(n)];
+  if(!pending)pending={date:new Date().toISOString().slice(0,10),fin:pickFin()};
+  let h=hero();
+  h+='<div class="datebar"><span>Datum</span><input type="date" id="dt" value="'+pending.date+'"><span>zapisuješ zpětně? přepiš</span></div>';
+  if(isDeload(n))h+='<div class="card" style="border-color:#E4C48A;background:#FDF6E8"><b>Lehký týden.</b> Váhy na 60 %, dvě série, žádný finišer. Neber to jako ztrátu — tady se dohání šlachy a klouby, které za svaly zaostávají.</div>';
+  h+='<div class="card"><details open><summary>Rozehřátí — 8 minut, vždycky stejné</summary><ul>'+WARMUP.map(w=>'<li><b>'+w.n+'</b> '+vid(w.n.replace(/ \d+.*/,''))+'<br>'+w.d+'</li>').join('')+(d.neg?'<li>2 série negativních shybů: vyskoč nahoru, 10 sekund dolů</li>':'')+'</ul></details></div>';
+  d.main.forEach((id,i)=>h+=exCard(id,n,i));
+  d.sup.forEach((id,i)=>h+=exCard(id,n,i+2));
+  if(!isDeload(n))h+='<div class="card finisher"><span class="tag" style="border-color:#3C4E55;color:#9FB3B0">finišer, 8 minut</span><h3>'+pending.fin.n+'</h3><p class="fmt">'+pending.fin.fmt+'</p><p class="cue">'+pending.fin.cue+'</p><button class="linkbtn" id="reroll">Dej mi jiný</button></div>';
+  h+='<button class="primary" id="save">Uložit trénink '+n+'</button>';
+  if(err)h+='<p class="err">'+err+'</p>';
+  if(S.sessions.length){
+    h+='<div class="card" style="margin-top:16px"><h3 style="font-size:17px;margin-bottom:6px">Odcvičeno</h3><div class="hist">'+
+      S.sessions.slice(-6).reverse().map(s=>'<div><span>'+s.date+'</span><span>trénink '+s.no+', '+s.day+'</span></div>').join('')+'</div>'+
+      '<button class="ghost" id="undo">Smazat poslední zápis</button>'+
+      '<div style="display:flex;gap:8px"><button class="ghost" id="exp">Stáhnout zálohu</button>'+
+      '<button class="ghost" id="impbtn">Načíst zálohu</button></div>'+
+      '<input type="file" id="imp" accept="application/json" style="display:none">'+
+      '<p class="cue" style="margin:8px 0 0">Data sedí v prohlížeči, ve kterém appku otevíráš. Když měníš telefon nebo mažeš historii, projeď to přes zálohu.</p></div>';
+  }
+  return h;
+}
+
+function viewStrava(){
+  const n=nextNo();
+  return '<div class="card"><h3 style="font-size:22px">Trénink v šest ráno</h3><p class="cue">Celý den se točí kolem jídla po tréninku. To je největší jídlo dne, zbytek pak může být lehčí.</p>'+
+  '<div class="meal"><div class="when">5:45, před tréninkem</div><h3>Nic, nebo banán a káva</h3><p>Ve tři čtvrtě na šest se velké jídlo nestihne strávit a bude ti při dřepech těžko. Padesát minut nalačno ti nic neubere.</p></div>'+
+  '<div class="meal"><div class="when">do hodiny po tréninku</div><h3>35–40 g bílkovin a slušná porce sacharidů</h3><p>Vejce s ovesnou kaší, tvaroh s chlebem, nebo shake, když ráno nemáš chuť. Tohle jídlo neodkládej na deset hodin.</p></div>'+
+  '<div class="meal"><div class="when">oběd</div><h3>Normální jídlo, sacharidy sem</h3><p>Rýže, brambory, těstoviny — sem patří. Maso nebo ryba do dlaně a půl.</p></div>'+
+  '<div class="meal"><div class="when">večer</div><h3>Bílkovina a zelenina, sacharidy dolů</h3><p>Ne proto, že by večerní sacharidy tloustly, ale protože ti to samo sníží denní příjem, aniž bys počítal.</p></div></div>'+
+  '<div class="card"><h3 style="font-size:20px;margin-bottom:8px">Čísla, na kterých záleží</h3>'+
+  '<div class="rule"><span>Bílkoviny denně</span><b>140 g</b></div>'+
+  '<div class="rule"><span>Deficit proti udržovací hodnotě</span><b>300–400 kcal</b></div>'+
+  '<div class="rule"><span>Voda kolem tréninku</span><b>0,5 l ráno</b></div>'+
+  '<p class="cue" style="margin-top:12px">Bílkoviny jsou jediné číslo, které má smysl hlídat každý den — udrží svaly, zatímco jde pupek dolů, a zasytí. Když se opřeš do většího deficitu, síla se po roce pauzy nevrátí a plán se rozsype.</p></div>'+
+  '<div class="card"><h3 style="font-size:20px;margin-bottom:8px">Dny bez tréninku</h3><p style="font-size:14px;margin:0">Bílkoviny stejné, sacharidy o třetinu dolů. Snídaně může být menší, protože ji nemáš po čem doplňovat. Jedno pravidlo, nic víc.</p></div>'+
+  (n<=12?'<div class="card" style="border-color:#E4C48A;background:#FDF6E8"><p style="margin:0;font-size:14px">Prvních dvanáct tréninků jedeš pod hranicí schválně. Hlad ani vyčerpání do téhle fáze nepatří — když máš hlad, přidej si k obědu.</p></div>':'');
+}
+
+function viewTelo(){
+  const b=S.body.slice(-12);
+  let chart='<p class="cue">Zatím žádné měření. Zvaž se ráno nalačno, změř pas přes pupek a zapiš.</p>';
+  if(b.length>1){
+    const ws=b.map(x=>x.w),ps=b.map(x=>x.p);
+    const line=(arr,col)=>{const mn=Math.min(...arr),mx=Math.max(...arr),rg=(mx-mn)||1;
+      return '<polyline fill="none" stroke="'+col+'" stroke-width="2" points="'+arr.map((v,i)=>(i/(arr.length-1)*300)+','+(60-(v-mn)/rg*50).toFixed(1)).join(' ')+'"/>'};
+    chart='<svg viewBox="0 0 300 70" style="width:100%;height:80px">'+line(ws,'#16232A')+line(ps,'#E4610F')+'</svg>'+
+      '<div class="rule"><span>Váha</span><b>'+ws[ws.length-1]+' kg</b></div><div class="rule"><span>Pas</span><b>'+ps[ps.length-1]+' cm</b></div>';
+  }
+  return '<div class="card"><h3 style="font-size:22px">Jednou týdně, stejný den ráno</h3><p class="cue">Váha samotná ti bude lhát — může stát na místě, zatímco se pupek sráží a svaly přibývají. Proto se měří i pas.</p>'+
+   chart+'</div>'+
+   '<div class="card"><div class="set"><label>Váha</label><input inputmode="decimal" id="bw"><span class="unit">kg</span></div>'+
+   '<div class="set" style="margin-top:8px"><label>Pas</label><input inputmode="decimal" id="bp"><span class="unit">cm</span></div>'+
+   '<button class="primary" id="savebody">Zapsat míru</button></div>';
+}
+
+function render(){
+  const app=document.getElementById('app');
+  const tabs=[['trenink','Trénink'],['strava','Strava'],['telo','Tělo']];
+  app.innerHTML='<nav role="tablist">'+tabs.map(t=>'<button role="tab" data-t="'+t[0]+'" aria-selected="'+(tab===t[0])+'">'+t[1]+'</button>').join('')+'</nav>'+
+    (tab==='trenink'?viewTrenink():tab==='strava'?viewStrava():viewTelo());
+  bind();
+}
+
+function bind(){
+  document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{tab=b.dataset.t;render()});
+  const dt=document.getElementById('dt'); if(dt)dt.onchange=e=>pending.date=e.target.value;
+  const rr=document.getElementById('reroll'); if(rr)rr.onclick=()=>{pending.fin=pickFin();render()};
+  const sv=document.getElementById('save'); if(sv)sv.onclick=saveSession;
+  const un=document.getElementById('undo'); if(un)un.onclick=async()=>{
+    if(!confirm('Smazat poslední zápis?'))return;
+    S.sessions.pop(); if(await save()){toast('Smazáno');pending=null;render()}};
+  const sb=document.getElementById('savebody'); if(sb)sb.onclick=saveBody;
+  const ex=document.getElementById('exp'); if(ex)ex.onclick=exportData;
+  const ib=document.getElementById('impbtn'); if(ib)ib.onclick=()=>document.getElementById('imp').click();
+  const im=document.getElementById('imp'); if(im)im.onchange=e=>{if(e.target.files[0])importData(e.target.files[0])};
+}
+
+async function saveSession(){
+  const n=nextNo(), ex={};
+  document.querySelectorAll('input[data-ex]').forEach(i=>{
+    const id=i.dataset.ex,k=+i.dataset.set,f=i.dataset.f,v=parseFloat(i.value.replace(',','.'));
+    if(isNaN(v))return; ex[id]=ex[id]||[]; ex[id][k]=ex[id][k]||{}; ex[id][k][f]=v;
+  });
+  Object.keys(ex).forEach(id=>{ex[id]=ex[id].filter(s=>s&&s.r>0)});
+  const any=Object.values(ex).some(a=>a.length);
+  if(!any){err='Zapiš aspoň jednu sérii, jinak není co ukládat.';render();return}
+  S.sessions.push({no:n,day:letter(n),date:pending.date,ex,fin:isDeload(n)?null:pending.fin.id});
+  if(!isDeload(n)){S.recentFin.push(pending.fin.id); if(S.recentFin.length>4)S.recentFin.shift()}
+  if(await save()){toast('Trénink '+n+' zapsaný');pending=null;window.scrollTo(0,0);render()}
+  else S.sessions.pop();
+}
+
+async function saveBody(){
+  const w=parseFloat((document.getElementById('bw').value||'').replace(',','.'));
+  const p=parseFloat((document.getElementById('bp').value||'').replace(',','.'));
+  if(isNaN(w)||isNaN(p)){err='Vyplň obojí — váha bez pasu ti toho moc neřekne.';render();return}
+  S.body.push({d:new Date().toISOString().slice(0,10),w,p});
+  if(await save()){toast('Zapsáno');render()}else S.body.pop();
+}
+
+load().then(render);
+})();
+</script>
